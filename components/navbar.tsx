@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/server"
 import LoginWidget from "@/components/login-widget";
 import Profile from "@/components/profile"
+import Signup from "./sign-up-dialogue";
 
 export default async function Navbar() {
     const supabase = await createClient();
@@ -10,7 +11,7 @@ export default async function Navbar() {
     <div className="flex flex-row justify-between items-center max-w-full h-14 py-2 px-8 shadow-md z-50">
         <img src="Pitt_Panthers_wordmark.svg" className="max-h-full"></img>
         <div className="flex flex-row h-full w-fit items-center">
-            { data.user ? <Profile/> : <LoginWidget/> }
+            { data.user ? <Profile/> : <div className="flex flex-row gap-3"><LoginWidget/><Signup full={false}/></div> }
         </div>
     </div>
     )

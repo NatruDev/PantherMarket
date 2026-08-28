@@ -13,16 +13,18 @@ import {
 } from "@/components/ui/dialog"
 import { Field, FieldGroup, FieldLabel, FieldSeparator, FieldDescription, FieldError } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 import { handleSignupForm } from "@/lib/actions";
+import { redirect } from "next/navigation";
 
-export default function Signup() {
+export default function Signup({ full } : any) {
     const [formError, formAction, isPending] = useActionState(handleSignupForm, '');
+    const [open, setOpen] = useState(false);
 
     return (
-        <Dialog>
-            <DialogTrigger render={<Button variant="outline">Sign up</Button>} />
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger render={<Button className={full ? 'px-10 py-7 text-2xl rounded-full' : ''}>{full ? 'Sign up with your Pitt email' : 'Sign up'}</Button>} />
             <DialogContent className="sm:max-w-sm">
                 <DialogHeader className="text-center">
                     <DialogTitle className="text-xl">Create your account</DialogTitle>
@@ -59,7 +61,7 @@ export default function Signup() {
                             <Button disabled={isPending} type="submit">{isPending ? '...' : 'Create Account'}</Button>
                             
                             <FieldDescription className="text-center">
-                                Already have an account? <a href="#">Sign in</a>
+                                Already have an account? <Button variant='link' className='text-muted-foreground cursor-pointer underline' onClick={() => {setOpen(false); redirect('/#login')}}>Login</Button>
                             </FieldDescription>
                         </Field>
                         { formError != '' && <FieldError>{formError}</FieldError> }

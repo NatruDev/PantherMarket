@@ -29,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full min-w-full flex flex-col">
         <Navbar></Navbar>
-        <div className="grow w-full">
+        <div className="flex grow w-full h-full">
           {children}
         </div>
       </body>
