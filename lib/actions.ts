@@ -49,3 +49,8 @@ export async function loginUserForm(_prev: any, formData: FormData) {
 
     return (error?.code || '').toString()
 }
+
+export async function logoutUser() {
+    let supabase = await createClient();
+    await supabase.auth.signOut({ scope: 'local' });
+}

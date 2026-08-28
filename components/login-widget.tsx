@@ -29,7 +29,7 @@ export default function LoginWidget() {
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger render={<Button variant="outline">Login</Button>} />
-            <PopoverContent>
+            <PopoverContent className="mt-3">
                 <form action={formAction}>
                     <FieldGroup className="gap-2.5">
                         <Field>

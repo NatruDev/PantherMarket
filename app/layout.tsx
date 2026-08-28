@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Merriweather } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Navbar from "@/components/navbar";
 
 const merriweather = Merriweather({subsets:['latin'],variable:'--font-serif'});
 
@@ -26,7 +27,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-serif", merriweather.variable)}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full min-w-full flex flex-col">
+        <Navbar></Navbar>
+        <div className="grow w-full">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
