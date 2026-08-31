@@ -2,6 +2,16 @@
 
 import { createClient } from "./supabase/server";
 
+export async function newListingForm(_prev: any, formData: FormData) {
+    let supabase = await createClient();
+
+    let formTitle = formData.get("title")?.toString();
+    let formDesc = formData.get("description")?.toString();
+    let formPrice = formData.get("price")?.toString();
+
+    return ''
+}
+
 export async function handleSignupForm(_prev: any, formData: FormData) {
     let supabase = await createClient();
 

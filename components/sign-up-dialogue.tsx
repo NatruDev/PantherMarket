@@ -61,7 +61,7 @@ export default function Signup({ full } : any) {
                             <Button disabled={isPending} type="submit">{isPending ? '...' : 'Create Account'}</Button>
                             
                             <FieldDescription className="text-center">
-                                Already have an account? <Button variant='link' className='text-muted-foreground cursor-pointer underline' onClick={() => {setOpen(false); redirect('/#login')}}>Login</Button>
+                                Already have an account? <Button variant='link' className='text-muted-foreground cursor-pointer underline' onClick={() => {setOpen(false); document.getElementById('loginButton')?.click();}}>Login</Button>
                             </FieldDescription>
                         </Field>
                         { formError != '' && <FieldError>{formError}</FieldError> }

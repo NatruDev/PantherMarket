@@ -9,8 +9,8 @@ import {
 
 export default function StoreItem({ data }: any) {
     return (
-        <Card className="p-0 m-4">
-            <CardContent className="w-64 h-72 p-0">
+        <Card className="p-0 m-4 h-72 w-64">
+            <CardContent className="p-0">
                 <Carousel opts={{
                     loop: true,
                 }}>
