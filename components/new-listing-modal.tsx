@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Field, FieldGroup, FieldLabel, FieldSeparator, FieldDescription, FieldError } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useRef, useState, useTransition } from "react";
 import {
     InputGroup,
     InputGroupAddon,
@@ -30,12 +30,38 @@ import { cn } from "@/lib/utils";
 import { UploadedFileItem } from "./file-item";
 
 export default function NewListing() {
-    const [formError, formAction, isPending] = useActionState(newListingForm, '');
+    // const [formError, formAction, isPending] = useActionState(newListingForm, '');
     const [open, setOpen] = useState(false);
     const [desc, setDesc] = useState('');
+    const [title, setTitle] = useState('');
+    const [price, setPrice] = useState('');
+    const [formError, setFormError] = useState('');
+    const [isPending, startTransition] = useTransition();
+
+    const formSubmit = (formData: FormData) => {
+        setFormError('');
+        startTransition(async () => {
+            const res = await newListingForm(null, formData);
+            setFormError(res || '');
+            if (!res) {
+                setOpen(false);
+                setTitle('');
+                setDesc('');
+                setPrice('');
+            }
+        })
+    };
 
     const descChange = (event: any) => {
         setDesc(event.target.value);
+    };
+
+    const titleChange = (event: any) => {
+        setTitle(event.target.value);
+    };
+
+    const priceChange = (event: any) => {
+        setPrice(event.target.value);
     };
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -95,19 +121,29 @@ export default function NewListing() {
                 <DialogHeader className="text-center">
                     <DialogTitle className="text-xl">New Listing</DialogTitle>
                 </DialogHeader>
-                <form action={formAction}>
+                <form action={formSubmit}>
                     <FieldGroup>
                         <Field>
                             <FieldLabel htmlFor="title">Title</FieldLabel>
-                            <Input id="title" name="title" type="text" autoComplete="off" required />
+                            <Input
+                                id="title"
+                                name="title"
+                                type="text"
+                                autoComplete="off"
+                                value={title}
+                                onChange={titleChange}
+                                required
+                            />
                         </Field>
                         <Field>
                             <FieldLabel htmlFor="block-end-textarea-desc">Description</FieldLabel>
                             <InputGroup>
                                 <InputGroupTextarea
                                     id="block-end-textarea-desc"
+                                    name="description"
                                     placeholder="Description..."
                                     maxLength={300}
+                                    value={desc}
                                     onChange={descChange}
                                     required
                                 />
@@ -125,7 +161,13 @@ export default function NewListing() {
                                 <InputGroupAddon>
                                     <InputGroupText>$</InputGroupText>
                                 </InputGroupAddon>
-                                <InputGroupInput id="price" placeholder="0.00" />
+                                <InputGroupInput
+                                    name="price"
+                                    id="price"
+                                    placeholder="0.00"
+                                    value={price}
+                                    onChange={priceChange}
+                                />
                                 <InputGroupAddon align="inline-end">
                                     <InputGroupText>USD</InputGroupText>
                                 </InputGroupAddon>
@@ -153,7 +195,7 @@ export default function NewListing() {
                         <Field>
                             <Button disabled={isPending} type="submit">{isPending ? '...' : 'Submit'}</Button>
                         </Field>
-                        {formError != '' && <FieldError>{formError}</FieldError>}
+                        {(formError != '' && !isPending) && <FieldError>{formError}</FieldError>}
                     </FieldGroup>
                 </form>
             </DialogContent>

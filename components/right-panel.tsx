@@ -35,7 +35,7 @@ import NewListing from "./new-listing-modal"
 
 export default function RightPanel() {
     return (
-        <div className="h-full w-lg shadow-md flex flex-col gap-2 px-8 py-10">
+        <div className="h-full w-lg shadow-md flex flex-col gap-2 px-8 py-10 z-10">
             <h3 className="text-xl">Location</h3>
             <Combobox defaultValue={neighborhoods[0]} items={neighborhoods}>
                 <ComboboxInput />

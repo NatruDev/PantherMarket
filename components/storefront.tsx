@@ -13,8 +13,8 @@ export default async function Storefront() {
     return (
         <div className="flex flex-row w-full h-full grow">
             <RightPanel />
-            <div className="w-full flex flex-row justify-center grow">
-                <div className="w-full max-w-[120rem] flex flex-wrap flex-row">
+            <div className="w-full flex flex-row justify-center grow bg-secondary">
+                <div className="w-full max-w-[115rem] flex flex-wrap flex-row content-start bg-white">
                     {listingsReq.data?.map(l => <StoreItem key={l.id} data={l} />)}
                 </div>
             </div>
